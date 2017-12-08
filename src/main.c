@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 
 #define DEFAULT_MMAP_DEV "/dev/mem"
-#define DEFAULT_VC4MEM_DEV "/dev/vc4mem"
+#define DEFAULT_VC4MEM_DEV "/dev/dmatest"
 
 void vc4mem_clear_config(struct vc4mem_config *cfg)
 {
