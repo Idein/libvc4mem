@@ -2,6 +2,7 @@
 #define VC4MEM_H_
 
 #include <sys/types.h>
+#include <fcntl.h> /* For O_* flags */
 
     struct vc4mem_config{
         char *mmap_dev;
