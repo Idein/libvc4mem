@@ -25,7 +25,7 @@ AM_PROG_AR
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdio.h stdlib.h stdarg.h string.h fcntl.h unistd.h errno.h \
-                  sys/types.h sys/stat.h])
+                  sys/types.h sys/stat.h sys/mman.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 
