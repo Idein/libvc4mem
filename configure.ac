@@ -33,5 +33,6 @@ AC_CHECK_HEADERS([stdio.h stdlib.h stdarg.h string.h fcntl.h unistd.h errno.h \
 AC_FUNC_MALLOC
 
 LT_INIT
-AC_CONFIG_FILES([Makefile include/Makefile src/Makefile libvc4mem.pc])
+AC_CONFIG_FILES([Makefile include/Makefile src/Makefile test/Makefile
+                 libvc4mem.pc])
 AC_OUTPUT
