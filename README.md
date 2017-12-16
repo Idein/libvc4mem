@@ -6,10 +6,11 @@
 ## Requirements
 
 You need to run
-[Idein:rpi-4.9.y-vc4mem](https://github.com/Idein/linux/tree/rpi-4.9.y-vc4mem)
-kernel to use this library.  See
-[the official documentation](https://www.raspberrypi.org/documentation/linux/kernel/building.md)
-to build and install the kernel on your pi.
+[Idein/linux:rpi-4.9.y-vc4mem](https://github.com/Idein/linux/tree/rpi-4.9.y-vc4mem)
+kernel to use this library.
+
+To cross-compile the kernel, please use my Docker image and script:
+[Terminus-IMRC/cross-rpi-kernel](https://github.com/Terminus-IMRC/cross-rpi-kernel).
 
 
 ## Installation
