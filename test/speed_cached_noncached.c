@@ -15,9 +15,26 @@ static void read_speed(const unsigned * const p, const size_t size)
     double start, end;
     start = get_time();
     for (i = 0; i < size / 4; i ++)
-        *((volatile unsigned*) p);
+        ((volatile unsigned*) p)[i];
     end = get_time();
     printf("%g [s], %g [B/s]\n", end - start, size / (end - start));
+}
+
+static void write_speed(const unsigned *p, const size_t size)
+{
+    static unsigned pat = 0xdeadbeef;
+    size_t i;
+    double start, end;
+    start = get_time();
+    for (i = 0; i < size / 4; i ++)
+        ((volatile unsigned*) p)[i] = pat;
+    end = get_time();
+    for (i = 0; i < size / 4; i ++)
+        if (p[i] != pat)
+            printf("error at i=%zu\n", i);
+    printf("%g [s], %g [B/s]\n", end - start, size / (end - start));
+    pat = pat ^ (pat << 13);
+    pat = pat ^ (pat >> 17);
 }
 
 int main()
@@ -45,12 +62,22 @@ int main()
     if (p2_user == NULL)
         return 1;
 
-    printf("Using size=%g [B]. Measuring 4 times each.\n", (double) size);
+    printf("Read test. Using size=%g[B]. Measuring 4 times each.\n",
+            (double) size);
     for (i = 0; i < 4; i ++) {
-        printf("cached #%d:     ", i);
+        printf("cached     #%d: ", i);
         read_speed(p1_user, size);
         printf("non-cached #%d: ", i);
         read_speed(p2_user, size);
+    }
+
+    printf("\nWrite test. Using size=%g[B]. Measuring 4 times each.\n",
+            (double) size);
+    for (i = 0; i < 4; i ++) {
+        printf("cached     #%d: ", i);
+        write_speed(p1_user, size);
+        printf("non-cached #%d: ", i);
+        write_speed(p2_user, size);
     }
 
     if (vc4mem_free(p1_user, p1_bus, size, &cfg1))
