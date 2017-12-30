@@ -13,6 +13,10 @@
 #include <errno.h>
 #include <sys/mman.h>
 
+#ifndef PAGE_SIZE
+#define PAGE_SIZE 4096
+#endif /* PAGE_SIZE */
+
 unsigned vc4mem_bus_to_phys(const unsigned bus)
 {
     return bus & ~0xc0000000;
@@ -22,6 +26,11 @@ void* vc4mem_map_phys_to_user(const unsigned phys, const size_t size,
         struct vc4mem_config *cfg)
 {
     void *user;
+
+    if (phys & (PAGE_SIZE - 1)) {
+        pr_err("address must be aligned to page size (%u)\n", PAGE_SIZE);
+        return NULL;
+    }
 
     user = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED,
             cfg->priv->fd, phys);
